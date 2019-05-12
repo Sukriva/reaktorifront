@@ -2,10 +2,6 @@
   <div>
     <div>
       <h1>CO2-emissions</h1>
-      <!-- <p>{{ countries }}</p> -->
-      <!-- <div v-for="country in this.countries" :key="country.id">
-        <p>{{ country }}</p>
-      </div> -->
       <select v-model="selected">
         <option v-for="country in this.countries" :key="country.id" v-on:click="getData()" >
           {{ country }}
@@ -20,17 +16,19 @@
       <table>
         <tr>
           <th>Years</th>
-          <th>Emissions</th>
+          <th v-show="!toggle">Emissions</th>
+          <th v-show="toggle">perCapita</th>
         </tr>
-        <tr v-for="(emission, index) in this.emissions">
+        <tr v-for="(emission, index) in this.emissions" v-show="!toggle">
           <td> {{ years[index] }} </td>
           <td> {{emission}} </td>
         </tr>
+        <tr v-for="(capita, index) in this.perCapita" v-show="toggle">
+          <td> {{ years[index] }} </td>
+          <td> {{capita}} </td>
+        </tr>
       </table>
-
-      <!-- <b-table hover :fields="fields" :items="years, emissions"></b-table> -->
     </div>
-      <!-- <b-table hover :fields="fields" :items="years, emissions"></b-table> -->
   </div>
 </template>
 
@@ -45,10 +43,8 @@ export default {
       selected: '',
       emissions: [],
       years: [],
-      population: [],
       perCapita: [],
       toggle: ''
-      //msg: 'Welcome to Your Vue.js App',
     };
   },
   mounted () {
@@ -61,33 +57,10 @@ export default {
    getData: function () {
      axios
        .get('http://localhost:5000/country?country=' + this.selected)
-       .then(response => (this.emissions = response.data.emissions, this.years = response.data.headers))
+       .then(response => (this.emissions = response.data.emissions, this.years = response.data.headers, this.perCapita = response.data.perCapita))
        .catch(function (error) {
          console.log(error);
        })
-     axios
-       .get('http://localhost:5000/countries?countri=' + this.selected)
-       .then(response => (this.population = response.data.populations))
-       .catch(function (error) {
-         console.log(error);
-       })
-   // }
-   // getPopulation: function() {
-   //   axios
-   //     .get('http://localhost:5000/countries?countri=' + this.selected)
-   //     .then(response => (this.population = response.data.populations))
-   //     .catch(function (error) {
-   //       console.log(error);
-   //     })
-   //   var i;
-   //   for (i = 0; i < this.emissions.length; i++) {
-   //     this.perCapita = this.emissions[i]/this.population[i];
-   //  }
-   },
-   getPerCapita: function() {
-     for (var i = 0; i < this.emissions.length; i++) {
-       this.perCapita[i] = this.emissions[i]/this.population[i];
-    }
    }
   },
   watch: {
@@ -102,7 +75,6 @@ export default {
 
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="css">
   table, th, tr{
     width:50%;
