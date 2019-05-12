@@ -7,12 +7,12 @@
         <p>{{ country }}</p>
       </div> -->
       <select v-model="selected">
-        <option v-for="country in this.countries" :key="country.id" v-on:click="getData()">
+        <option v-for="country in this.countries" :key="country.id" v-on:click="getData()" >
           {{ country }}
         </option>
       </select>
       <div class="checkbox">
-        <label><input type="checkbox" v-model="per_capita" >Per capita</label>
+        <label><input type="checkbox" v-model="toggle">Per capita</label>
       </div>
       <p>{{ this.selected }}</p>
     </div>
@@ -27,8 +27,10 @@
           <td> {{emission}} </td>
         </tr>
       </table>
+
       <!-- <b-table hover :fields="fields" :items="years, emissions"></b-table> -->
     </div>
+      <!-- <b-table hover :fields="fields" :items="years, emissions"></b-table> -->
   </div>
 </template>
 
@@ -39,11 +41,13 @@ export default {
   name: 'Testing',
   data() {
     return {
-      fields: ['years','emissions'],
       countries: [],
       selected: '',
       emissions: [],
       years: [],
+      population: [],
+      perCapita: [],
+      toggle: ''
       //msg: 'Welcome to Your Vue.js App',
     };
   },
@@ -51,9 +55,7 @@ export default {
    axios
      .get('http://localhost:5000/countries')
      .then(response => (this.countries = response.data.countries))
-     .catch(function (error) {
-       console.log(error);
-     })
+     .catch(error => console.log(error));
    },
   methods: {
    getData: function () {
@@ -63,6 +65,29 @@ export default {
        .catch(function (error) {
          console.log(error);
        })
+     axios
+       .get('http://localhost:5000/countries?countri=' + this.selected)
+       .then(response => (this.population = response.data.populations))
+       .catch(function (error) {
+         console.log(error);
+       })
+   // }
+   // getPopulation: function() {
+   //   axios
+   //     .get('http://localhost:5000/countries?countri=' + this.selected)
+   //     .then(response => (this.population = response.data.populations))
+   //     .catch(function (error) {
+   //       console.log(error);
+   //     })
+   //   var i;
+   //   for (i = 0; i < this.emissions.length; i++) {
+   //     this.perCapita = this.emissions[i]/this.population[i];
+   //  }
+   },
+   getPerCapita: function() {
+     for (var i = 0; i < this.emissions.length; i++) {
+       this.perCapita[i] = this.emissions[i]/this.population[i];
+    }
    }
   },
   watch: {
