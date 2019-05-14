@@ -12,7 +12,7 @@
       </div>
       <p>{{ this.selected }}</p>
     </div>
-    <div class="emissionstable">
+    <div class="emissionstable" v-if="this.selected">
       <table>
         <tr>
           <th>Years</th>
@@ -21,11 +21,13 @@
         </tr>
         <tr v-for="(emission, index) in this.emissions" v-show="!toggle">
           <td> {{ years[index] }} </td>
-          <td> {{emission}} </td>
+          <td v-if="emission===''"> - </td>
+          <td v-else> {{emission}} </td>
         </tr>
         <tr v-for="(capita, index) in this.perCapita" v-show="toggle">
           <td> {{ years[index] }} </td>
-          <td> {{capita}} </td>
+          <td v-if="capita===0"> - </td>
+          <td v-else> {{capita}} </td>
         </tr>
       </table>
     </div>
