@@ -21,4 +21,10 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+body{
+  background-image: url('./assets/pollution.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
 </style>

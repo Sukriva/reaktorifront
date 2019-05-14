@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="firstdiv">
     <div>
       <h1>CO2-emissions</h1>
-      <select v-model="selected">
+      <select v-model="selected" class="select">
         <option v-for="country in this.countries" :key="country.id" v-on:click="getData()" >
           {{ country }}
         </option>
@@ -82,11 +82,21 @@ export default {
     width:50%;
     margin-left:25%;
     margin-right:15%;
-    border: 1px solid #ddd;
+    border: 2px solid #ddd;
     padding: 5px;
     border-collapse: collapse;
   }
   .checkbox{
     padding-top: 10px;
+  }
+  .firstdiv{
+    width: 75%;
+    margin: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: white;
+  }
+  .select {
+
   }
 </style>
