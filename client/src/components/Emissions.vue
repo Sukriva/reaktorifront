@@ -16,8 +16,8 @@
       <table>
         <tr>
           <th>Years</th>
-          <th v-show="!toggle">Emissions</th>
-          <th v-show="toggle">perCapita</th>
+          <th v-show="!toggle">Emissions (kt)</th>
+          <th v-show="toggle">Per capita</th>
         </tr>
         <tr v-for="(emission, index) in this.emissions" v-show="!toggle">
           <td> {{ years[index] }} </td>
@@ -31,14 +31,21 @@
         </tr>
       </table>
     </div>
+    <div v-if="this.selected">
+       <Chart v-bind:years="years" v-bind:emissions="emissions" v-bind:perCapita="perCapita"  v-bind:toggle="toggle"/>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import Chart from './Chart.vue'
 
 export default {
   name: 'Testing',
+  components: {
+    Chart
+  },
   data() {
     return {
       countries: [],
