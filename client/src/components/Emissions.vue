@@ -16,8 +16,8 @@
       <table>
         <tr>
           <th>Years</th>
-          <th v-show="!toggle">Emissions</th>
-          <th v-show="toggle">perCapita</th>
+          <th v-show="!toggle">Emissions (kt)</th>
+          <th v-show="toggle">Per capita</th>
         </tr>
         <tr v-for="(emission, index) in this.emissions" v-show="!toggle">
           <td> {{ years[index] }} </td>

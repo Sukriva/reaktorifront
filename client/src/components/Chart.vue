@@ -1,5 +1,5 @@
 <template>
-  <div class="small">
+  <div class="thechart">
     <line-chart :chart-data="datacollection"></line-chart>
   </div>
 </template>
@@ -35,8 +35,8 @@
             labels: this.years,
             datasets: [
               {
-                label: 'Emissions per Capita',
-                backgroundColor: '#abb5a4',
+                label: 'Emissions per capita',
+                backgroundColor: 'grey',
                 data: this.perCapita
               }
             ]
@@ -46,8 +46,8 @@
             labels: this.years,
             datasets: [
               {
-                label: 'Co2 Emissions',
-                backgroundColor: '#abb5a4',
+                label: 'Co2 Emissions(kt)',
+                backgroundColor: 'grey',
                 data: this.emissions
               }
             ]
@@ -59,8 +59,9 @@
 </script>
 
 <style>
-  .small {
-    max-width: 750px;
-    margin:  10px auto;
+  .thechart {
+    width: 75%;
+    margin: auto;
+    padding-top: 50px;
   }
 </style>
